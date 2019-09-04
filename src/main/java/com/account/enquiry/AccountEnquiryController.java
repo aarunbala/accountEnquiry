@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.account.enquiry.model.Account;
 
+/**
+ * @author arun.balasubramanian
+ *
+ * Controller class that provides Account Enquiry functionality.
+ */
 @Validated
 @RestController
 public class AccountEnquiryController {
@@ -27,8 +32,16 @@ public class AccountEnquiryController {
 	@Autowired
 	IAccountEnquiryService service;
 
-	// Using GetMapping instead of RequestMapping as its more readable and
-	// supports CORS by default.
+	
+	/**
+	 * Method gets all the accounts for the provided User; If no accounts are available for an User,
+	 * then responds with an 204 status code. Also, responds with 400 for invalid arguments.
+	 * 
+	 * Using GetMapping instead of RequestMapping as its more readable and supports CORS by default.
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	@GetMapping(path = "/accountEnquiry/{userId}/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Account>> getAllAccounts(
 			@PathVariable @NotBlank(message = "User Id cannot be blank") @Size(min = 3, max = 9, message = "User Id must be of size 3 to 9 characters") String userId) {
@@ -42,6 +55,13 @@ public class AccountEnquiryController {
 		return response;
 	}
 
+	/**
+	 * Method gets the accounts details of the provided Account number and User Id.
+	 * 
+	 * @param userId
+	 * @param accountNumber
+	 * @return
+	 */
 	@GetMapping(path = "/accountEnquiry/{userId}/{accountNumber}/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Account> getAccountByAccountNumber(
 			@PathVariable @NotBlank @Size(min = 3, max = 9, message = "User Id must not be blank and must be of size 3 to 9 characters") String userId,
@@ -56,6 +76,12 @@ public class AccountEnquiryController {
 		return response;
 	}
 
+	/**
+	 * Method prevents any other resources from being accessed, throws PathNotFoundException which
+	 * will get converted to HTTPStatus.BAD_REQUEST 400 status code.
+	 * 
+	 * @throws PathNotFoundException
+	 */
 	@GetMapping("/*")
 	public void otherPaths() throws PathNotFoundException {
 		throw new PathNotFoundException();

@@ -23,11 +23,24 @@ public class AccountEnquiryService implements IAccountEnquiryService {
 	@Autowired
 	private AccountRepository repository;
 	
+	/**
+	 * Method fetches all the accounts for the User using JPA repositories.
+	 * Paging has not yet been implemented. 
+	 * 
+	 * @param userId
+	 */
 	public List<Account> getAllAccounts(String userId){
 		log.debug("Getting all accounts for User", userId);
 		return repository.findAllByUserId(userId);
 	}
 	
+	/**
+	 * Method retrieves the account details for provided accountNumber & associated user.
+	 * If the account is not associated with the user then provides an empty response.
+	 *  
+	 * @param userId
+	 * @param accountNumber
+	 */
 	public Account getAccountByAccountNumber(String userId, Long accountNumber) {
 		log.debug("Getting account by Account number {} and {}", userId, accountNumber);
 		return repository.findByUserIdAndAccountNumber(userId, accountNumber);

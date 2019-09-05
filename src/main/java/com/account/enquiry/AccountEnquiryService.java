@@ -1,5 +1,6 @@
 package com.account.enquiry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,8 +31,10 @@ public class AccountEnquiryService implements IAccountEnquiryService {
 	 * @param userId
 	 */
 	public List<Account> getAllAccounts(String userId){
-		log.debug("Getting all accounts for User", userId);
-		return repository.findAllByUserId(userId);
+		log.debug("Start of Function: Getting all accounts for User", userId);
+		List<Account> accounts = repository.findAllByUserId(userId);
+		log.debug("Exiting function");
+		return accounts != null ? accounts : new ArrayList<Account>();
 	}
 	
 	/**
@@ -42,7 +45,9 @@ public class AccountEnquiryService implements IAccountEnquiryService {
 	 * @param accountNumber
 	 */
 	public Account getAccountByAccountNumber(String userId, Long accountNumber) {
-		log.debug("Getting account by Account number {} and {}", userId, accountNumber);
-		return repository.findByUserIdAndAccountNumber(userId, accountNumber);
+		log.debug("Start of Function: Getting account by Account number {} and {}", userId, accountNumber);
+		Account account = repository.findByUserIdAndAccountNumber(userId, accountNumber); 
+		log.debug("Exiting function");
+		return account;
 	}
 }

@@ -52,6 +52,7 @@ public class AccountEnquiryController {
 		if (accounts == null || accounts.isEmpty()) {
 			response = new ResponseEntity<List<Account>>(HttpStatus.NO_CONTENT);
 		}
+		log.debug("Exiting Function");
 		return response;
 	}
 
@@ -69,10 +70,13 @@ public class AccountEnquiryController {
 		
 		log.info("Get account for User : {} by Account Number: {} ", userId, accountNumber);
 		Account account = service.getAccountByAccountNumber(userId, accountNumber);
-		ResponseEntity<Account> response = new ResponseEntity<>(account, HttpStatus.OK);
+		ResponseEntity<Account> response = null;
 		if (account == null) {
 			response = new ResponseEntity<Account>(HttpStatus.NO_CONTENT);
+		} else {
+			response = new ResponseEntity<>(account, HttpStatus.OK);
 		}
+		log.debug("Exiting Function");
 		return response;
 	}
 
